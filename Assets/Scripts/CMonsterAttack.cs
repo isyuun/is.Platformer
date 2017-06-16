@@ -34,9 +34,6 @@ public abstract class CMonsterAttack : _MonoBehaviour
         _animator.SetBool("Attack", true);
     }
 
-    // 공격
-    public abstract void Attack();
-
     // 공격 끝
     public virtual void AttackFinish()
     {
@@ -44,5 +41,23 @@ public abstract class CMonsterAttack : _MonoBehaviour
         _monsterState.state = CCharacterState.State.Idle;
         // 대기 에니메이션
         _animator.SetBool("Attack", false);
+    }
+
+
+    //// 공격
+    //public abstract void Attack();
+    // 공격
+    public virtual void Attack()
+    {
+    }
+
+    public void AttackAnimationEvent()
+    {
+        Attack();
+    }
+
+    public void AttackFinishAnimationEvent()
+    {
+        AttackFinish();
     }
 }

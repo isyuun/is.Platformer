@@ -39,6 +39,9 @@ public class CMonsterStandShot : CMonsterAttack
             case CheckType.FRONT:
                 _targetChecker.FrontTargetChecker(this);
                 break;
+            case CheckType.CIRCLE:
+                _targetChecker.CircleAreaTargetChecker(this);
+                break;
         }
     }
 
@@ -51,7 +54,8 @@ public class CMonsterStandShot : CMonsterAttack
     // 공격함
     public override void Attack()
     {
-        Debug.Log("총알 발사!!!");
+        //Debug.Log(this.GetMethodName());
+        //Debug.Log("총알 발사!!!");
 
         // 총알을 발포함
         GameObject bullet = Instantiate(_bulletPrefab,
@@ -68,15 +72,5 @@ public class CMonsterStandShot : CMonsterAttack
 
         // 공격이 끝나고 다시 센서링을 시작함
         StartTargetChecker();
-    }
-
-    public virtual void AttackAnimationEvent()
-    {
-        Attack();
-    }
-
-    public virtual void AttackFinishAnimationEvent()
-    {
-        AttackFinish();
     }
 }

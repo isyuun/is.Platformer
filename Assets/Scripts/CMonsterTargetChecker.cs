@@ -15,6 +15,7 @@ public class CMonsterTargetChecker : _MonoBehaviour
     {
         _monsterState = GetComponent<CCharacterState>();
         _attackPoint = transform.Find("AttackPoint").transform;
+        //Debug.Log(this.GetMethodName() + _monsterState.state);
     }
 
     // 몬스터 센서링 가동
@@ -27,6 +28,8 @@ public class CMonsterTargetChecker : _MonoBehaviour
     private IEnumerator FrontTargetCheckCoroutine(
         CMonsterAttack monsterAttack)
     {
+        //Debug.Log(this.GetMethodName() + _monsterState.state + ":" + _checkState);
+
         // 몬스터가 대기 상태라면 감시를 진행함
         while (_monsterState.state == _checkState)
         {
@@ -34,7 +37,8 @@ public class CMonsterTargetChecker : _MonoBehaviour
             Vector2 endPos = new Vector2(_attackPoint.position.x - ((_monsterState._isRightDir) ? -_checkRange : _checkRange), _attackPoint.position.y);
 
             // 충돌 체크 디버그 레이저 발사
-            Debug.DrawLine(_attackPoint.position, endPos, Color.green);
+            //Debug.DrawLine(_attackPoint.position, endPos, Color.green);
+            DebugDrawLine(_attackPoint.position, endPos, Color.green);
 
             //----
 
@@ -44,6 +48,41 @@ public class CMonsterTargetChecker : _MonoBehaviour
 
             // 충돌체가 존재한다면
             if (hitInfo.collider != null)
+            {
+                //Debug.LogWarning(this.GetMethodName() + hitInfo + ":" + hitInfo.collider);
+
+                // 공격 시작
+                monsterAttack.AttackReady();
+            }
+
+            yield return null;
+        }
+    }
+
+    public virtual void DebugDrawLine(Vector3 start, Vector3 end, Color color)
+    {
+        Debug.DrawLine(start, end, color);
+    }
+
+    public void CircleAreaTargetChecker(CMonsterAttack monsterAttack)
+    {
+        _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+
+        //Debug.Log("player pos => " + _playerPos.position);
+
+        StartCoroutine("CircleAreaTargetCheckCoroutine", monsterAttack);
+    }
+
+    public IEnumerator CircleAreaTargetCheckCoroutine(CMonsterAttack monsterAttack)
+    {
+        // 몬스터가 대기 상태라면 감시를 진행함
+        while (_monsterState.state == _checkState)
+        {
+            float distance = Vector2.Distance(_attackPoint.position, _playerPos.position);
+
+            //Debug.Log("player pos => " + _playerPos.position);
+
+            if (distance < _checkRange)
             {
                 // 공격 시작
                 monsterAttack.AttackReady();

@@ -53,8 +53,7 @@ public class CInputAttack : _MonoBehaviour
         //Debug.Log(this.GetMethodName());
 
         // 공격 포인트에서 1반지름 안에 들어오는 몬스터들의 콜라이더를 검출함
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(
-            _attackPoint.position, 1f, 1 << LayerMask.NameToLayer("Monster"));
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackPoint.position, 1f, 1 << LayerMask.NameToLayer("Monster"));
 
         //Debug.Log("hit monster count : " + colliders.Length);
 

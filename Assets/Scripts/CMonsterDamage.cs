@@ -23,7 +23,7 @@ public class CMonsterDamage : CDamage
     // 피격 처리
     public void Damage(float damage)
     {
-        //Debug.Log(this.GetMethodName() + ":" + damage);
+        Debug.Log(this.GetMethodName() + ":" + damage);
 
         // 몬스터의 체력을 감소함
         _monsterState._hp -= damage;

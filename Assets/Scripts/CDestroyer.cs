@@ -22,6 +22,11 @@ public class CDestroyer : _MonoBehaviour
 
     public virtual void Destroy()
     {
+        if (transform.root != null)
+        {
+            Destroy(transform.root.gameObject, _destroyDelayTime);
+        }
+
         // 지정된 파괴 시간뒤에 오브젝트를 파괴함
         Destroy(gameObject, _destroyDelayTime);
     }
